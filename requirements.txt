@@ -3,3 +3,4 @@ uvicorn
 python-dotenv
 pymongo      # ou outra dependência que você tiver
 dnspython    # necessário para conexões com MongoDB Atlas
+motor
