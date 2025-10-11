@@ -11,5 +11,6 @@ database = client.azakron
 
 
 collection_notes = database.notes
+collection_tags = database.tags
 collection_tasks = database.tasks
 

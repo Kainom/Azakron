@@ -1,7 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from api.models import Note
-from api.dao import create_note, get_note, get_notes
-
+from api.schemas.dao_notes import create_note,get_note,get_notes
 router = APIRouter()
 
 @router.post("/notes", response_model=str)
