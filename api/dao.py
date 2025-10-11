@@ -1,4 +1,4 @@
-from app.database import collection_notes 
+from api.database import collection_notes 
 from bson.objectid import ObjectId
 
 
