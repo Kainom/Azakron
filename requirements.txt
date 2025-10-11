@@ -1,3 +1,5 @@
-fastapi==0.104.1
-uvicorn==0.24.0
-motor
+fastapi
+uvicorn
+python-dotenv
+pymongo      # ou outra dependência que você tiver
+dnspython    # necessário para conexões com MongoDB Atlas
