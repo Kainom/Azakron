@@ -29,7 +29,6 @@ async def update_note(note_id: str, note_data: dict) -> bool:
     )
     return result.modified_count > 0
 
-  ## paginate notes
 
 async def get_notes_paginated(skip: int = 0, limit: int = 10,user_id: str = None) -> list:
     query = {}
@@ -39,3 +38,14 @@ async def get_notes_paginated(skip: int = 0, limit: int = 10,user_id: str = None
     for note in notes:
         note["id"] = str(note["_id"])
     return notes
+
+async def delete_note(note_id: str,user_id: str) -> bool:
+    result = await collection_notes.delete_one({"_id": ObjectId(note_id),"user_id":user_id})
+    return result.deleted_count > 0
+
+async def update_note(note_id: str, user_id: str, note_data: dict) -> bool:
+    result = await collection_notes.update_one(
+        {"_id": ObjectId(note_id), "user_id": user_id},
+        {"$set": note_data}
+    )
+    return result.modified_count > 0

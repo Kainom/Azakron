@@ -10,23 +10,21 @@ router = APIRouter()
 async def create_tag_route(tag: Tag):
     return await create_tag(tag.model_dump())
 
-@router.get("/tags/{tag_id}", response_model=Tag)
+@router.get("/tag/{tag_id}", response_model=Tag)
 async def get_tag_route(tag_id: str,user_id: str):
     tag = await get_tag(tag_id,user_id)
     if not tag:
         raise HTTPException(status_code=404, detail="Tag not found")
     return tag
 
-@router.get("/tags", response_model=list[Tag])
-async def get_tags_route(user_id: str = None):
+@router.get("/tags/{user_id}", response_model=list[Tag])
+async def get_tags_route(user_id: str):
     return await get_tags(user_id=user_id)
 
-@router.put("/tags/{tag_id}", response_model=bool)
-async def update_tag_route(tag_id: str, tag: Tag):
+@router.put("/tags/{user_id}/{tag_id}", response_model=bool)
+async def update_tag_route(user_id: str, tag_id: str, tag: Tag):
     return await update_tag(tag_id, tag.model_dump())
 
-@router.delete("/tags/{tag_id}", response_model=bool)
-async def delete_tag_route(tag_id: str,user_id: str):
-    return await delete_tag(tag_id,user_id=user_id)
-
-
+@router.delete("/tags/{user_id}/{tag_id}", response_model=bool)
+async def delete_tag_route(user_id: str, tag_id: str):
+    return await delete_tag(tag_id, user_id=user_id)
