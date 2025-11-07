@@ -13,11 +13,18 @@ MONGO_DETAILS = os.getenv("MONGO_DETAILS")
 logger.info(f"Connecting to MongoDB at {MONGO_DETAILS}")
 
 
-client = AsyncIOMotorClient(MONGO_DETAILS)
-database = client.azakron
+try:
+    client = AsyncIOMotorClient(MONGO_DETAILS)
+    database = client.azakron
+    collection_notes = database.notes
+    collection_tags = database.tags
+    collection_tasks = database.tasks
 
+    async def test_connection():
+        await client.admin.command('ping')
+        logger.info("✅ Conectado com sucesso ao MongoDB")
 
-collection_notes = database.notes
-collection_tags = database.tags
-collection_tasks = database.tasks
+    asyncio.get_event_loop().run_until_complete(test_connection())
 
+except Exception as e:
+    logger.exception(f"❌ Erro ao conectar no MongoDB: {e}")
