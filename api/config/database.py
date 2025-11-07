@@ -1,11 +1,18 @@
 from motor.motor_asyncio import AsyncIOMotorClient
 from dotenv import load_dotenv
 import os
+import logging
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 
 load_dotenv()
 
 MONGO_DETAILS = os.getenv("MONGO_DETAILS")
-print("Connecting to MongoDB at:", MONGO_DETAILS)
+loog.info(f"Connecting to MongoDB at {MONGO_DETAILS}")
+
+
 client = AsyncIOMotorClient(MONGO_DETAILS)
 database = client.azakron
 
