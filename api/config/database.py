@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 load_dotenv()
 
 MONGO_DETAILS = os.getenv("MONGO_DETAILS")
-loog.info(f"Connecting to MongoDB at {MONGO_DETAILS}")
+logger.info(f"Connecting to MongoDB at {MONGO_DETAILS}")
 
 
 client = AsyncIOMotorClient(MONGO_DETAILS)
