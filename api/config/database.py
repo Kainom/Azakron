@@ -14,21 +14,24 @@ if not MONGO_DETAILS:
     logger.error("❌ MONGO_DETAILS não encontrado")
     raise ValueError("MONGO_DETAILS is required")
 
-logger.info(f"Connecting to MongoDB")
+def get_database():
+    """Cria uma nova conexão para cada uso - ideal para serverless"""
+    client = AsyncIOMotorClient(
+        MONGO_DETAILS,
+        maxPoolSize=1,
+        minPoolSize=0,
+        serverSelectionTimeoutMS=5000
+    )
+    return client.azakron
 
-# Configuração otimizada para serverless
-client = AsyncIOMotorClient(
-    MONGO_DETAILS,
-    maxPoolSize=1,  # Importante para serverless
-    minPoolSize=0,
-    serverSelectionTimeoutMS=5000,
-    connectTimeoutMS=5000,
-    socketTimeoutMS=5000
-)
+# Funções para obter collections com nova conexão
+def get_collection_notes():
+    return get_database().notes
 
-database = client.azakron
-collection_notes = database.notes
-collection_tags = database.tags
-collection_tasks = database.tasks
+def get_collection_tags():
+    return get_database().tags
 
-logger.info("✅ Cliente MongoDB configurado")
+def get_collection_tasks():
+    return get_database().tasks
+
+logger.info("✅ Configuração MongoDB pronta")
