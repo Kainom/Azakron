@@ -5,7 +5,7 @@ import os
 load_dotenv()
 
 MONGO_DETAILS = os.getenv("MONGO_DETAILS")
-
+print("Connecting to MongoDB at:", MONGO_DETAILS)
 client = AsyncIOMotorClient(MONGO_DETAILS)
 database = client.azakron
 
