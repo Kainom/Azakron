@@ -22,17 +22,16 @@ async def get_note_route(note_id: str,user_id: str):
 @router.get("/notes/{user_id}", response_model=list[Note])
 async def get_notes_route(user_id: str):
     try:
-        notes = await collection_notes.find(query).to_list(100)
-        for note in notes:
-            note["id"] = str(note["_id"])
-            del note["_id"]  # Remove o ObjectId ✅
-        return notes
+        return await get_notes(user_id=user_id)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.get("/notes/paginated", response_model=list[Note])
 async def get_notes_paginated_route(skip: int = 0, limit: int = 10,user_id: str = None):
-    return await get_notes_paginated(skip, limit,user_id)
+    try:
+        return await get_notes_paginated(skip, limit,user_id)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 @router.get("/notes/search/{user_id}", response_model=list[Note])
 async def search_notes_route(user_id: str, query: str):

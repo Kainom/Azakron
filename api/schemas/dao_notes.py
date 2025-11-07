@@ -19,6 +19,7 @@ async def get_notes(user_id: str = None) -> list:
   notes = await collection_notes.find(query).to_list(100)
   for note in notes:
       note["id"] = str(note["_id"])
+      del note["_id"]
   return notes
 
 
